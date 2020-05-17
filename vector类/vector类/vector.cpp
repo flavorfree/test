@@ -10,7 +10,7 @@ namespace zd
 	class vector
 	{
 	public:
-		typedef T* iterator;
+		typedef T* iterator;	//vector迭代器是一个原生指针
 
 		vector()	//构造
 			:_start(nullptr)
@@ -26,7 +26,7 @@ namespace zd
 			_end_of_storage = _start + v.size();
 		}
 
-		vector<T>& operator = (const vector<T> v)
+		vector<T>& operator = (const vector<T> v)	//赋值重载
 		{
 			//swap(_start, v._start);
 			//swap(_finish, v._finish);
@@ -42,7 +42,7 @@ namespace zd
 			_start = _finish = _end_of_storage = nullptr;
 		}
 
-		void swap(vector<T>& v)
+		void swap(vector<T>& v)	//v1.swap(v2;
 		{
 			swap(_start, v._start);
 			swap(_finish, v._finish);
@@ -67,9 +67,9 @@ namespace zd
 			}
 			if (n > capacity())
 			{
-				reserve(n);
+				reserve(n);	//扩容，扩容后情况变为：size() > n > capacity()
 			}
-			while(_finish != _start + n)
+			while(_finish != _start + n)	//size() > n > capacity()
 			{
 				_finish = val;
 				++_finish;
@@ -82,7 +82,7 @@ namespace zd
 			{
 				size_t sz = size();
 				T* tmp = new T[n];
-				if (_start)
+				if (_start)	//判断数组是否为空
 				{
 					memcpy(tmp, _start, sizeof(T)*sz);
 					delete[] _start;
@@ -104,6 +104,8 @@ namespace zd
 
 			*_finish = x;
 			++_finish;
+
+			//insert(end(), x) 复用代码
 		}
 
 		void pop_back()	//头插
@@ -120,7 +122,7 @@ namespace zd
 				size_t n = pos - _start;
 				size_t newcapacity = capacity() == 0 ? 2 : capacity() * 2;
 				reserve(newcapacity);
-				pos = _start + n;
+				pos = _start + n;	//增容后,_start位置可能改变了，所以要找到正确的pos位置
 			}
 
 			iterator end = _finish-1;
@@ -167,9 +169,9 @@ namespace zd
 		}
 
 	private:
-		iterator _start;
-		iterator _finish;
-		iterator _end_of_storage;
+		iterator _start;			//指向数据块的开始
+		iterator _finish;			//指向有效数据的尾
+		iterator _end_of_storage;	//指向存储容量的尾
 	};
 
 	void test1()
