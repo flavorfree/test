@@ -63,7 +63,7 @@ namespace zd
 			return *this;
 		}
 
-		Self operator--(int)	//ºóÖÃ++
+		Self operator--(int)	//ºóÖÃ--
 		{
 			Self tmp = *this;
 			_node = _node->_prev;
